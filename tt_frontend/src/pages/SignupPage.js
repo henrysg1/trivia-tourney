@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './SignupPage.css';
 
 const SignupPage = () => {
     const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const SignupPage = () => {
         country: '',
         profile_picture: null,
     });
+    const [fileName, setFileName] = useState('No file chosen'); // To show selected file name
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
@@ -22,10 +24,12 @@ const SignupPage = () => {
     };
 
     const handleFileChange = (e) => {
+        const file = e.target.files[0];
         setFormData((prev) => ({
             ...prev,
-            profile_picture: e.target.files[0],
+            profile_picture: file,
         }));
+        setFileName(file ? file.name : 'No file chosen'); // Update file name display
     };
 
     const handleSubmit = (e) => {
@@ -40,60 +44,77 @@ const SignupPage = () => {
             form.append('profile_picture', formData.profile_picture);
         }
 
-        axios.post('http://127.0.0.1:8000/api/register/', form)
+        axios
+            .post('http://127.0.0.1:8000/api/register/', form)
             .then(() => navigate('/'))
             .catch((err) => setError(err.response.data));
     };
 
     return (
-        <div style={{ textAlign: 'center', marginTop: '50px' }}>
-            <h1>Sign Up</h1>
-            <form onSubmit={handleSubmit} encType="multipart/form-data">
-                <div>
-                    <input
-                        type="text"
-                        name="username"
-                        placeholder="Username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <input
-                        type="text"
-                        name="country"
-                        placeholder="Country"
-                        value={formData.country}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <input type="file" name="profile_picture" onChange={handleFileChange} />
-                </div>
-                <button type="submit">Create Account</button>
-            </form>
-            {error && <div style={{ color: 'red' }}>{JSON.stringify(error)}</div>}
+        <div className="signup-page">
+            <div className="logo">
+                <h1>Trivia Tourney</h1>
+            </div>
+            <div className="signup-form">
+                <h2>Create an Account</h2>
+                <form onSubmit={handleSubmit} encType="multipart/form-data">
+                    <div className="input-group">
+                        <input
+                            type="text"
+                            name="username"
+                            placeholder="Username"
+                            value={formData.username}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="input-group">
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="input-group">
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="input-group">
+                        <input
+                            type="text"
+                            name="country"
+                            placeholder="Country"
+                            value={formData.country}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="input-group file-input">
+                        <label htmlFor="profile_picture" className="custom-file-label">
+                            Choose File
+                        </label>
+                        <input
+                            type="file"
+                            id="profile_picture"
+                            name="profile_picture"
+                            onChange={handleFileChange}
+                        />
+                        <span className="file-name">{fileName}</span>
+                    </div>
+                    <button type="submit" className="signup-button">
+                        Create Account
+                    </button>
+                </form>
+                {error && <div className="error-message">{JSON.stringify(error)}</div>}
+            </div>
         </div>
     );
 };

@@ -22,28 +22,26 @@ const QuizPage = () => {
     };
 
     return (
-        <div style={{ textAlign: 'center', marginTop: '50px' }}>
-            <h1>Quiz: {category}</h1>
-            <h2>{question.text}</h2>
-            <div>
+        <div>
+            <div className="panel">
+                <h1>{category} Quiz</h1>
+                <h2>{question.text}</h2>
+            </div>
+            <div className="grid">
                 {question.options.map((option, index) => (
                     <button
                         key={index}
                         onClick={() => handleAnswer(option)}
                         disabled={isAnswered}
                         style={{
-                            margin: '10px',
-                            padding: '10px 20px',
-                            background: isAnswered
+                            backgroundColor: isAnswered
                                 ? option === question.correctAnswer
                                     ? 'green'
                                     : option === selectedOption
                                     ? 'red'
-                                    : 'gray'
-                                : 'blue',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '5px',
+                                    : 'white'
+                                : 'white',
+                            color: isAnswered && option === selectedOption ? 'white' : 'black',
                         }}
                     >
                         {option}
@@ -51,7 +49,7 @@ const QuizPage = () => {
                 ))}
             </div>
             {isAnswered && (
-                <div>
+                <div className="panel">
                     {isCorrect ? (
                         <p style={{ color: 'green' }}>Correct!</p>
                     ) : (

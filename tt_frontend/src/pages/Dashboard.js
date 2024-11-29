@@ -8,7 +8,6 @@ const Dashboard = () => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        // Fetch user details from the backend
         const fetchUser = async () => {
             try {
                 const token = localStorage.getItem('token');
@@ -36,16 +35,20 @@ const Dashboard = () => {
     }
 
     return (
-        <div style={{ textAlign: 'center', marginTop: '50px' }}>
-            <h1>Welcome, {user.username}</h1>
-            <p>Your Score: {user.score || 1200}</p>
-            <p>Your Rank: {user.rank || '#15'}</p>
-            <h2>Recent Quiz Scores</h2>
-            <ul>
-                <li>Science: 80%</li>
-                <li>History: 70%</li>
-                <li>General Knowledge: 90%</li>
-            </ul>
+        <div>
+            <div className="panel">
+                <h1>Welcome, {user.username}</h1>
+                <p>Your Score: {user.score || 1200}</p>
+                <p>Your Rank: {user.rank || '#15'}</p>
+            </div>
+            <div className="panel">
+                <h2>Recent Quiz Scores</h2>
+                <ul>
+                    <li>Science: 80%</li>
+                    <li>History: 70%</li>
+                    <li>General Knowledge: 90%</li>
+                </ul>
+            </div>
             <button onClick={() => navigate('/select-quiz')}>Play a Quiz</button>
             <div style={{ marginTop: '20px' }}>
                 <LogoutButton />
