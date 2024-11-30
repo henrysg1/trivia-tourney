@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Question
+from .models import QuizScore, Question
 from .serializers import QuestionSerializer, UserSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -37,12 +37,14 @@ class UserDetailView(APIView):
 
     def get(self, request):
         user = request.user
+        rank = user.rank if hasattr(user, 'rank') else None  # Handle cases where rank doesn't exist
         return Response({
-            'id': user.id,
-            'username': user.username,
-            'email': user.email,
-            'score': 1200,  # Example data; replace with actual logic if needed
-            'rank': '#15'  # Example data; replace with actual logic if needed
+            "username": user.username,
+            "profile_picture": user.profile_picture.url if user.profile_picture else None,
+            "rank": {
+                "name": rank.rank if rank else "Unranked",
+                "image": rank.image.url if rank and rank.image else None,
+            } if rank else None,
         })
 
 
@@ -66,3 +68,20 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+
+
+class AddQuizScoreView(APIView):
+    def post(self, request):
+        user = request.user
+        score = request.data.get('score')
+
+        if user and score is not None:
+            # Create QuizScore record
+            QuizScore.objects.create(user=user, score=score)
+            
+            # Update the user's total score
+            user.total_score += int(score)
+            user.save()
+
+            return Response({"message": "Score added successfully!"}, status=status.HTTP_201_CREATED)
+        return Response({"error": "Invalid data"}, status=status.HTTP_400_BAD_REQUEST)

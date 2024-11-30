@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question
+from .models import Question, Rank
 
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ('question', 'category', 'correct_answer')
@@ -8,3 +8,7 @@ class QuestionAdmin(admin.ModelAdmin):
 
 # Register with customization
 admin.site.register(Question, QuestionAdmin)
+
+@admin.register(Rank)
+class RankAdmin(admin.ModelAdmin):
+    list_display = ('user', 'rank', 'last_updated')
