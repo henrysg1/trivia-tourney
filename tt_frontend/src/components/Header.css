@@ -1,0 +1,57 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #64b5f6; /* Light blue */
+    color: white;
+}
+
+.logo-header img {
+    width: 150px; /* Adjust width */
+    height: auto; /* Maintain aspect ratio */
+    cursor: pointer;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-picture {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Make it circular */
+    border: 2px solid white;
+    object-fit: cover; /* Ensures the image fits within the circle */
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: white;
+}
+
+.username {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.user-rank {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.rank-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.settings {
+    font-size: 24px;
+    cursor: pointer;
+}

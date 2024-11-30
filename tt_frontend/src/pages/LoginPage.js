@@ -33,8 +33,8 @@ const LoginPage = () => {
 
     return (
         <div className="login-page">
-            <div className="logo">
-                <h1>Trivia Tourney</h1>
+            <div className="logo-login-page">
+                <img src="/images/logo.png" alt="Trivia Tourney Logo" />
             </div>
             <div className="login-form">
                 <h2>Login</h2>

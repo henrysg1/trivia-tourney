@@ -3,14 +3,10 @@
     padding: 20px;
 }
 
-.logo {
-    margin-bottom: 30px;
-}
-
-.logo h1 {
-    font-size: 36px;
-    color: #64b5f6; /* Blue for logo text */
-    margin: 0;
+.logo-login-page img {
+    width: 400px; /* Adjust width */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 50px;
 }
 
 .login-form {
